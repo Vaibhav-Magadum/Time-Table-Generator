@@ -28,7 +28,7 @@ for subject in subjects:
 # Set time slots
 start_time = 9
 end_time = 16
-time_slots = [f"{time}:00" for time in range(start_time, 11)] + ["11:00", "11:15"] + [f"{time}:00" for time in range(11, 13)] + ["13:15", "14:00"] + [f"{time}:00" for time in range(15, end_time)]
+time_slots = ["9.00", "10.00", "11.00", "12.00", "1.00", "2.00", "3.00"]
 
 # Assign subjects to time slots
 for day, schedule in timetable.items():
@@ -37,13 +37,7 @@ for day, schedule in timetable.items():
         subject = random.choice(subjects)
         if subject in assigned_subjects:
             continue
-        if time_slot not in schedule and time_slot != "11:00" and time_slot != "11:15":
-            schedule[time_slot] = subject
-            assigned_subjects.append(subject)
-        else:
-            while time_slot in schedule or subject in assigned_subjects or time_slot == "11:00" or time_slot == "11:15":
-                time_slot = random.choice(time_slots)
-                subject = random.choice(subjects)
+        if time_slot not in schedule:
             schedule[time_slot] = subject
             assigned_subjects.append(subject)
 
@@ -64,5 +58,4 @@ for day, schedule in timetable.items():
 
 # Print the timetable table
 headers = ["Weeks"] + time_slots
-tabulate(table, headers=headers, tablefmt="grid")
 print(tabulate(table, headers=headers, tablefmt="grid"))
