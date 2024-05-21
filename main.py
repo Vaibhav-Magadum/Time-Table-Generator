@@ -1,4 +1,5 @@
 import random
+import PySimpleGUI as sg
 from tabulate import tabulate
 
 timetable = {
@@ -11,18 +12,18 @@ timetable = {
 }
 
 # Enter the number of subjects
-n = int(input("Enter the number of subjects: "))
+n = int(sg.popup_get_text("Enter the number of subjects: "))
 
 # Enter the subjects
 subjects = []
 for i in range(n):
-    subject = input(f"Enter subject {i+1}: ")
+    subject = sg.popup_get_text(f"Enter subject {i+1}: ")
     subjects.append(subject)
 
 # Enter the number of teaching hours for each subject
 teaching_hours = {}
 for subject in subjects:
-    hours = int(input(f"Enter the number of teaching hours for {subject}: "))
+    hours = int(sg.popup_get_text(f"Enter the number of teaching hours for {subject}: "))
     teaching_hours[subject] = hours
 
 # Set time slots
@@ -56,6 +57,18 @@ for day, schedule in timetable.items():
             row.append("")
     table.append(row)
 
-# Print the timetable table
-headers = ["Weeks"] + time_slots
-print(tabulate(table, headers=headers, tablefmt="grid"))
+# Create the GUI window
+layout = [
+    [sg.Table(values=table, headings=["Weeks"] + time_slots, justification="center", key="-TABLE-")],
+    [sg.Button("Exit")]
+]
+
+window = sg.Window("Timetable", layout)
+
+# Event loop
+while True:
+    event, values = window.read()
+    if event == sg.WINDOW_CLOSED or event == "Exit":
+        break
+
+window.close()
