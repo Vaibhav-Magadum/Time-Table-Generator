@@ -16,20 +16,17 @@ n = int(sg.popup_get_text("Enter the number of subjects: "))
 
 # Enter the subjects
 subjects = []
+teaching_hours = {}
 for i in range(n):
     subject = sg.popup_get_text(f"Enter subject {i+1}: ")
     subjects.append(subject)
-
-# Enter the number of teaching hours for each subject
-teaching_hours = {}
-for subject in subjects:
     hours = int(sg.popup_get_text(f"Enter the number of teaching hours for {subject}: "))
     teaching_hours[subject] = hours
 
 # Set time slots
 start_time = 9
 end_time = 16
-time_slots = ["9.00", "10.00", "11.00", "12.00", "1.00", "2.00", "3.00"]
+time_slots = ["9.00", "10.00", "11.15", "12.15", "2.00", "3.00"]
 
 # Assign subjects to time slots
 for day, schedule in timetable.items():
